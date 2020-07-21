@@ -4,9 +4,9 @@ import Link from "next/link";
 const Navegacion = () => {
   return (
     <nav>
-      <Link href="/">Inicio</Link>
-      <Link href="/">Populares</Link>
-      <Link href="/">Nuevo Producto</Link>
+      <a href="/">Inicio</a>
+      <a href="/">Populares</a>
+      <a href="/">Nuevo Producto</a>
     </nav>
   );
 };

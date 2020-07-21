@@ -16,8 +16,8 @@ const Header = () => {
         <div>
           <p>Hola: Usuario</p>
           <button type="button">Cerrar Sesión</button>
-          <Link href="/">Login</Link>
-          <Link href="/">Crear Cuenta</Link>
+          <a href="/">Login</a>
+          <a href="/">Crear Cuenta</a>
         </div>
       </div>
     </header>
