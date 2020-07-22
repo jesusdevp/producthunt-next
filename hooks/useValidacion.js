@@ -31,12 +31,18 @@ const useValidacion = (stateInicial, validar, fn) => {
     guardarSubmitForm(true);
   };
 
+  // Cuando se realiza el evento de blut
+  const handleBlur = () => {
+    const erroresValidacion = validar(valores);
+    guardarErrores(erroresValidacion);
+  };
+
   return {
     valores,
     errores,
-    submitform,
     handleChange,
     handleSubmit,
+    handleBlur,
   };
 };
 
