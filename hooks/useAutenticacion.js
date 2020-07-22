@@ -5,9 +5,9 @@ function useAutenticacion() {
   const [usuarioautenticado, guardarUsuarioAutenticado] = useState(null);
 
   useEffect(() => {
-    const unsuscribe = firebase.auth.onAuthStateChanged((user) => {
-      if (user) {
-        guardarUsuarioAutenticado(user);
+    const unsuscribe = firebase.auth.onAuthStateChanged((usuario) => {
+      if (usuario) {
+        guardarUsuarioAutenticado(usuario);
       } else {
         guardarUsuarioAutenticado(null);
       }
