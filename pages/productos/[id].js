@@ -59,6 +59,7 @@ const Producto = () => {
     url,
     urlimagen,
     votos,
+    creador,
   } = producto;
 
   return (
@@ -78,11 +79,14 @@ const Producto = () => {
           <ContenedorProducto>
             <div>
               <p>
-                Publicado hace:{" "}
-                {formatDistanceToNow(new Date(creado), { locale: es })}{" "}
+                Por: {creador.nombre} de {empresa}{" "}
               </p>
               <img src={urlimagen} />
               <p>{descripcion}</p>
+              <p>
+                Publicado hace:{" "}
+                {formatDistanceToNow(new Date(creado), { locale: es })}{" "}
+              </p>
               <h2>Agrega tu comentario</h2>
               <form>
                 <Campo>
