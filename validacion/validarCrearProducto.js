@@ -7,7 +7,7 @@ export default function validarCrearCuenta(valores) {
   }
 
   // Validar empresa
-  if (valores.empresa) {
+  if (!valores.empresa) {
     errores.empresa = "Nombre de empresa es obligatorio";
   }
 
