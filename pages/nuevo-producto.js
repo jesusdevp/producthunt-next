@@ -204,7 +204,13 @@ const NuevoProducto = () => {
 
               {error && <Error>{error} </Error>}
 
-              <InputSubmit type="submit" value="Crear Producto" />
+              <InputSubmit
+                css={css`
+                  margin-bottom: 2rem;
+                `}
+                type="submit"
+                value="Crear Producto"
+              />
             </Formulario>
           </>
         )}

@@ -60,7 +60,7 @@ const Producto = () => {
       };
       obtenerProducto();
     }
-  }, [id]);
+  }, [id, consultarDB]);
 
   if (Object.keys(producto).length === 0 && !error) return "Cargando...";
 
@@ -74,6 +74,7 @@ const Producto = () => {
     urlimagen,
     votos,
     creador,
+    haVotado,
   } = producto;
 
   // Administrar y validar los votos
@@ -150,6 +151,35 @@ const Producto = () => {
     });
 
     guardarConsultarDB(true); // Hay un comentario, por lo tanto consultar a la BD
+  };
+
+  // Funcion que revisa que el creador del producto sea el mismo que esta autenticado
+  const puedeBorrar = () => {
+    if (!usuario) return false;
+
+    if (creador.id === usuario.uid) {
+      return true;
+    }
+  };
+
+  // Elimina un producto de la BD
+  const eliminarProducto = async () => {
+    if (!usuario) {
+      return router.push("/login");
+    }
+
+    if (creador.id !== usuario.uid) {
+      return router.push("/");
+    }
+    try {
+      await firebase.db
+        .collection("productos")
+        .doc(id)
+        .delete();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -250,11 +280,14 @@ const Producto = () => {
                       text-align: center;
                     `}
                   >
-                    {votos} Votos
+                    {votos} {votos === 1 ? "Voto" : "Votos"}
                   </p>
                 </div>
               </aside>
             </ContenedorProducto>
+            {puedeBorrar() && (
+              <Boton onClick={eliminarProducto}>Eliminar Producto</Boton>
+            )}
           </div>
         )}
       </>
