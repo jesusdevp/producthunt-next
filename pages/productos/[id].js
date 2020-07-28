@@ -282,12 +282,12 @@ const Producto = () => {
                   >
                     {votos} {votos === 1 ? "Voto" : "Votos"}
                   </p>
+                  {puedeBorrar() && (
+                    <Boton onClick={eliminarProducto}>Eliminar Producto</Boton>
+                  )}
                 </div>
               </aside>
             </ContenedorProducto>
-            {puedeBorrar() && (
-              <Boton onClick={eliminarProducto}>Eliminar Producto</Boton>
-            )}
           </div>
         )}
       </>

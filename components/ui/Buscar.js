@@ -28,13 +28,28 @@ const InputSubmit = styled.button`
   }
 `;
 
+const Mensaje = styled.p`
+  margin: 0;
+  font-weight: bold;
+  color: #da552f;
+`;
+
 const Buscar = () => {
   const [busqueda, guardarBusqueda] = useState("");
+  const [error, guardarError] = useState(false);
 
   const buscarProducto = (e) => {
     e.preventDefault();
 
-    if (busqueda.trim() === "") return;
+    if (busqueda.trim() === "") {
+      guardarError(true);
+
+      // Quitar mensaje de error
+      setTimeout(() => {
+        guardarError(false);
+      }, 4000);
+      return;
+    }
 
     // redireccionar a /buscar
     Router.push({
@@ -56,6 +71,7 @@ const Buscar = () => {
         onChange={(e) => guardarBusqueda(e.target.value)}
       />
       <InputSubmit type="submit">Buscar</InputSubmit>
+      {error ? <Mensaje>Realiza una búsqueda</Mensaje> : null}
     </form>
   );
 };
