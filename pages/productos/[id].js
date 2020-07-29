@@ -125,6 +125,10 @@ const Producto = () => {
     e.preventDefault();
     e.target.reset();
 
+    const comentarioCreado = {
+      comentarioPublicado: Date.now(),
+    };
+
     if (!usuario) {
       return router.push("/login");
     }
@@ -132,6 +136,7 @@ const Producto = () => {
     // Informacion extra al comentario
     comentario.usuarioId = usuario.uid;
     comentario.usuarioNombre = usuario.displayName;
+    comentario.comentarioCreado = comentarioCreado.comentarioPublicado;
 
     // Tomar copia de comentarios y agregarlos al arreglo
     const nuevosComentarios = [...comentarios, comentario];
@@ -256,6 +261,16 @@ const Producto = () => {
                             {comentario.usuarioNombre}
                           </span>{" "}
                         </p>
+                        <p>
+                          Publicado hace:{" "}
+                          {formatDistanceToNow(
+                            new Date(comentario.comentarioCreado),
+                            {
+                              locale: es,
+                            }
+                          )}{" "}
+                        </p>
+
                         {esCreador(comentario.usuarioId) && (
                           <CreadorProducto>Es Creador</CreadorProducto>
                         )}
