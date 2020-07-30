@@ -10,7 +10,7 @@ import {
   Error,
 } from "../components/ui/Formulario";
 
-import { FirebaseContext } from "../firebase";
+import { FirebaseContext } from "../firebase/index";
 
 import Error404 from "../components/layout/404";
 

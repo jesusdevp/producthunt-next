@@ -8,7 +8,7 @@ import {
   InputSubmit,
   Error,
 } from "../components/ui/Formulario";
-import firebase from "../firebase";
+import firebase from "../firebase/index";
 
 // Validaciones
 import useValidacion from "../hooks/useValidacion";

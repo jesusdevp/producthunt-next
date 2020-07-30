@@ -4,7 +4,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 
 import Layout from "../../components/layout/Layout";
-import { FirebaseContext } from "../../firebase";
+import { FirebaseContext } from "../../firebase/index";
 import Error404 from "../../components/layout/404";
 import { css } from "@emotion/core";
 import styled from "@emotion/styled";
@@ -27,6 +27,8 @@ const CreadorProducto = styled.p`
   font-weight: bold;
   display: inline-block;
   text-align: center;
+  font-style: italic;
+  margin: 0;
 `;
 
 const Producto = () => {
@@ -60,7 +62,7 @@ const Producto = () => {
       };
       obtenerProducto();
     }
-  }, [id, consultarDB]);
+  }, [id, producto, consultarDB]);
 
   if (Object.keys(producto).length === 0 && !error) return "Cargando...";
 
@@ -205,15 +207,46 @@ const Producto = () => {
             </h1>
             <ContenedorProducto>
               <div>
-                <p>
+                <h2
+                  css={css`
+                    margin: 0;
+                  `}
+                >
                   Por: {creador.nombre} de {empresa}{" "}
-                </p>
+                </h2>
+                <hr
+                  css={css`
+                    border: 1px solid red;
+                    margin-bottom: 2rem;
+                  `}
+                />
                 <img src={urlimagen} />
+                <hr
+                  css={css`
+                    border: 1px solid var(--naranja);
+                  `}
+                />
+                <h2
+                  css={css`
+                    margin: 2rem 0;
+                  `}
+                >
+                  Descripción
+                </h2>
                 <p>{descripcion}</p>
-                <p>
+                <p
+                  css={css`
+                    font-style: italic;
+                  `}
+                >
                   Publicado hace:{" "}
                   {formatDistanceToNow(new Date(creado), { locale: es })}{" "}
                 </p>
+                <hr
+                  css={css`
+                    border: 1px solid var(--naranja);
+                  `}
+                />
                 {usuario && (
                   <>
                     <h2>Agrega tu comentario</h2>
@@ -222,6 +255,7 @@ const Producto = () => {
                         <input
                           type="text"
                           required
+                          placeholder="Escribe aquí tu comentario..."
                           name="mensaje"
                           onChange={comentarioChange}
                         />
@@ -237,6 +271,17 @@ const Producto = () => {
                 >
                   Comentarios
                 </h2>
+                {!usuario && (
+                  <p
+                    css={css`
+                      font-weight: bold;
+                      font-style: italic;
+                    `}
+                  >
+                    Para comentar inicia sesión o crea una cuenta
+                  </p>
+                )}
+
                 {comentarios.length === 0 ? (
                   "Aún no hay comentarios"
                 ) : (
@@ -245,23 +290,45 @@ const Producto = () => {
                       <li
                         key={`${comentario.usuarioId}-${i}`}
                         css={css`
-                          border: 1px solid #e1e1e1;
+                          border: 2px solid var(--naranja);
+                          border-radius: 8px;
                           padding: 2rem;
                           margin-bottom: 2rem;
                         `}
                       >
-                        <p>{comentario.mensaje}</p>
-                        <p>
-                          Escrito por:{" "}
-                          <span
-                            css={css`
-                              font-weight: bold;
-                            `}
-                          >
-                            {comentario.usuarioNombre}
-                          </span>{" "}
+                        <div>
+                          <p>
+                            Escrito por:{" "}
+                            <span
+                              css={css`
+                                font-weight: bold;
+                                border: 1px dashed va(--naranja);
+                              `}
+                            >
+                              {comentario.usuarioNombre}
+                            </span>{" "}
+                          </p>
+                          {esCreador(comentario.usuarioId) && (
+                            <CreadorProducto>Es Creador</CreadorProducto>
+                          )}
+                        </div>
+                        <p
+                          css={css`
+                            font-weight: bold;
+                          `}
+                        >
+                          {comentario.mensaje}
                         </p>
-                        <p>
+                        <hr
+                          css={css`
+                            border: 1px solid #e1e1e1;
+                          `}
+                        />
+                        <p
+                          css={css`
+                            font-style: italic;
+                          `}
+                        >
                           Publicado hace:{" "}
                           {formatDistanceToNow(
                             new Date(comentario.comentarioCreado),
@@ -270,10 +337,6 @@ const Producto = () => {
                             }
                           )}{" "}
                         </p>
-
-                        {esCreador(comentario.usuarioId) && (
-                          <CreadorProducto>Es Creador</CreadorProducto>
-                        )}
                       </li>
                     ))}
                   </ul>
@@ -289,7 +352,13 @@ const Producto = () => {
                     margin-top: 5rem;
                   `}
                 >
-                  {usuario && <Boton onClick={votarProducto}>Votar</Boton>}
+                  {usuario && haVotado <= 0 ? (
+                    <Boton onClick={votarProducto}>Votar</Boton>
+                  ) : (
+                    <Boton bgColor="true" disable>
+                      Has Votado
+                    </Boton>
+                  )}
                   <p
                     css={css`
                       text-align: center;

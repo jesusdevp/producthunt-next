@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FirebaseContext } from "../firebase";
+import { FirebaseContext } from "../firebase/index";
 
 const useProductos = (orden) => {
   const [productos, guardarProductos] = useState([]);

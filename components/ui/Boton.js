@@ -19,6 +19,12 @@ const Boton = styled.a`
   &:hover {
     cursor: pointer;
   }
+
+  /* @media (max-width: 976px) {
+    a {
+      font-size: 1.5rem;
+    }
+  } */
 `;
 
 export default Boton;
