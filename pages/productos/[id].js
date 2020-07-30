@@ -352,13 +352,18 @@ const Producto = () => {
                     margin-top: 5rem;
                   `}
                 >
-                  {usuario && haVotado <= 0 ? (
-                    <Boton onClick={votarProducto}>Votar</Boton>
-                  ) : (
-                    <Boton bgColor="true" disable>
-                      Has Votado
-                    </Boton>
+                  {!usuario && (
+                    <p
+                      css={css`
+                        font-weight: bold;
+                        font-style: italic;
+                        text-align: center;
+                      `}
+                    >
+                      Para votar inicia sesión o crea una cuenta
+                    </p>
                   )}
+                  {usuario && <Boton onClick={votarProducto}>Votar</Boton>}
                   <p
                     css={css`
                       text-align: center;
